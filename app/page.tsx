@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import Footer from '../components/Footer';
 import type { Metadata } from 'next';
+import { Shield, ArrowRight, AlertTriangle, Bell, Brain, CheckCircle } from 'lucide-react';
 
 // SEO Metadata for Home Page
 export const metadata: Metadata = {
   title: "Home | Real-Time Zero-Day Vulnerability & CVE Tracker",
-  description: "Monitor critical zero-day vulnerabilities and CVEs in real-time from CISA KEV and National Vulnerability Database. Get instant security alerts, CVSS scores, and comprehensive vulnerability intelligence for proactive threat management.",
+  description: "Monitor critical zero-day vulnerabilities and CVEs in real-time from CISA KEV and National Vulnerability Database. \n Instant security alerts, CVSS scores, and vulnerability intelligence for proactive threat management.",
   keywords: [
     "zero-day tracker",
     "CVE monitoring",
@@ -130,19 +131,19 @@ async function fetchLatestVulnerabilities(): Promise<Vulnerability[]> {
 
 function getSeverityColor(severity: string) {
   switch (severity.toLowerCase()) {
-    case 'critical': return 'status-critical';
-    case 'high': return 'status-high';
-    case 'medium': return 'status-medium';
-    case 'low': return 'status-low';
-    default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    case 'critical': return 'bg-red-500/20 text-red-300 border-red-500/50';
+    case 'high': return 'bg-orange-500/20 text-orange-300 border-orange-500/50';
+    case 'medium': return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/50';
+    case 'low': return 'bg-green-500/20 text-green-300 border-green-500/50';
+    default: return 'bg-slate-700/20 text-slate-300 border-slate-700/50';
   }
 }
 
 function getSourceColor(source: string) {
   switch (source) {
-    case 'CISA KEV': return 'bg-red-500';
-    case 'NVD': return 'bg-blue-500';
-    default: return 'bg-gray-500';
+    case 'CISA KEV': return 'bg-red-500/10 border-red-500/30';
+    case 'NVD': return 'bg-blue-500/10 border-blue-500/30';
+    default: return 'bg-slate-700/10 border-slate-700/30';
   }
 }
 
@@ -176,54 +177,6 @@ function generateStructuredData(vulnerabilities: Vulnerability[]) {
         "founder": {
           "@type": "Person",
           "name": "Lisman Razvan"
-        },
-        "sameAs": [
-          "https://www.linkedin.com/company/secforit", // Update with actual links
-          "https://twitter.com/secforit"
-        ]
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://secforit.ro/#webpage",
-        "url": "https://secforit.ro",
-        "name": "Zero-Day Vulnerability Tracker | Real-Time CVE Monitoring",
-        "description": "Monitor critical zero-day vulnerabilities and CVEs from CISA KEV and NVD with real-time updates",
-        "isPartOf": {
-          "@id": "https://secforit.ro/#website"
-        },
-        "about": {
-          "@type": "Thing",
-          "name": "Cybersecurity Vulnerability Monitoring"
-        },
-        "inLanguage": "en-US"
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://secforit.ro"
-          }
-        ]
-      },
-      {
-        "@type": "SoftwareApplication",
-        "name": "Zero-Day Vulnerability Tracker",
-        "applicationCategory": "SecurityApplication",
-        "operatingSystem": "Web Browser",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.8",
-          "ratingCount": "150",
-          "bestRating": "5",
-          "worstRating": "1"
         }
       }
     ]
@@ -242,52 +195,60 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
-        <div className="container mx-auto px-6 py-8 max-w-7xl flex-grow">
-          {/* Header Section with SEO-optimized content */}
-          <header className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4 shadow-lg">
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
+      <div className="min-h-screen bg-black text-white overflow-hidden">
+        {/* Animated background grid */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-black to-slate-950" />
+          <svg className="absolute inset-0 w-full h-full opacity-10">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgb(148, 163, 184)" strokeWidth="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+          </svg>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6 py-16">
+          {/* Hero Section */}
+          <header className="text-center mb-20">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl mb-6 shadow-2xl shadow-red-500/30">
+              <Shield className="w-12 h-12 text-white" />
             </div>
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 bg-clip-text text-transparent">
               Zero-Day Vulnerability Tracker
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Real-time CVE monitoring from <strong>CISA Known Exploited Vulnerabilities</strong> and <strong>National Vulnerability Database</strong>. Stay protected with instant security alerts and comprehensive threat intelligence.
+            <p className="text-xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Real-time CVE monitoring from <strong className="text-red-400">CISA KEV</strong> and <strong className="text-blue-400">National Vulnerability Database</strong>.
+              Instant security alerts and threat intelligence.
             </p>
             
             {/* Navigation with descriptive text for SEO */}
-            <nav aria-label="Main navigation" className="flex flex-wrap justify-center gap-4 mb-8">
+            <nav aria-label="Main navigation" className="flex flex-wrap justify-center gap-4 mb-12">
               <Link 
                 href="/dashboard"
-                className="btn-primary inline-flex items-center space-x-2"
+                className="group px-8 py-4 rounded-lg bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-red-500/20 hover:shadow-red-500/40 inline-flex items-center space-x-2"
                 aria-label="View vulnerability dashboard with real-time statistics"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
                 <span>Dashboard</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link 
                 href="/ai-summaries"
-                className="bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors duration-200 shadow-sm hover:shadow-md inline-flex items-center space-x-2"
+                className="px-8 py-4 rounded-lg border border-purple-500/30 bg-purple-500/10 hover:bg-purple-500/20 text-white font-semibold transition-colors inline-flex items-center space-x-2"
                 aria-label="View AI-powered vulnerability analysis and threat intelligence"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
+                <Brain className="w-5 h-5" />
                 <span>AI Analysis</span>
               </Link>
               <a 
                 href="/rss"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-orange-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-700 transition-colors duration-200 shadow-sm hover:shadow-md inline-flex items-center space-x-2"
+                className="px-8 py-4 rounded-lg border border-slate-700 hover:border-slate-600 bg-slate-900 hover:bg-slate-800 text-white font-semibold transition-colors inline-flex items-center space-x-2"
                 aria-label="Subscribe to RSS feed for vulnerability updates"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
                 </svg>
                 <span>RSS Feed</span>
@@ -298,25 +259,25 @@ export default async function Home() {
           {vulnerabilities.length > 0 ? (
             <>
               {/* Stats Bar with semantic HTML */}
-              <section aria-label="Vulnerability statistics" className="mb-8 bg-white rounded-xl shadow-md p-6 border border-gray-200">
-                <div className="flex flex-wrap justify-center items-center gap-8 text-center">
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">CISA KEV Vulnerabilities</p>
-                    <p className="text-3xl font-bold text-red-600">
+              <section aria-label="Vulnerability statistics" className="mb-16 bg-slate-950 rounded-xl border border-slate-800 p-8">
+                <div className="flex flex-wrap justify-center items-center gap-12 text-center">
+                  <div className="flex-1 min-w-[180px]">
+                    <p className="text-sm font-medium text-slate-500 uppercase tracking-widest mb-2">CISA KEV</p>
+                    <p className="text-4xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
                       {vulnerabilities.filter(v => v.source === 'CISA KEV').length}
                     </p>
                   </div>
-                  <div className="h-12 w-px bg-gray-300" aria-hidden="true"></div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">NVD Recent CVEs</p>
-                    <p className="text-3xl font-bold text-blue-600">
+                  <div className="h-12 w-px bg-slate-700" aria-hidden="true"></div>
+                  <div className="flex-1 min-w-[180px]">
+                    <p className="text-sm font-medium text-slate-500 uppercase tracking-widest mb-2">NVD Recent</p>
+                    <p className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
                       {vulnerabilities.filter(v => v.source === 'NVD').length}
                     </p>
                   </div>
-                  <div className="h-12 w-px bg-gray-300" aria-hidden="true"></div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 uppercase tracking-wide mb-1">Total Tracked</p>
-                    <p className="text-3xl font-bold text-gray-800">
+                  <div className="h-12 w-px bg-slate-700" aria-hidden="true"></div>
+                  <div className="flex-1 min-w-[180px]">
+                    <p className="text-sm font-medium text-slate-500 uppercase tracking-widest mb-2">Total Tracked</p>
+                    <p className="text-4xl font-bold text-white">
                       {vulnerabilities.length}
                     </p>
                   </div>
@@ -324,20 +285,22 @@ export default async function Home() {
               </section>
 
               {/* Vulnerability Cards with semantic HTML and microdata */}
-              <section aria-label="Latest vulnerabilities" className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <section id="vulnerabilities" aria-label="Latest vulnerabilities" className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
                 {vulnerabilities.map((vuln) => (
                   <article 
                     key={vuln.id} 
-                    className="bg-white rounded-xl shadow-md border border-gray-200 card-hover overflow-hidden"
+                    className="group relative bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 transition-all duration-300 overflow-hidden hover:bg-slate-900/50"
                     itemScope 
                     itemType="https://schema.org/TechArticle"
                   >
-                    <div className="p-6">
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 to-orange-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative p-6">
                       {/* Header */}
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <span className={`w-3 h-3 rounded-full ${getSourceColor(vuln.source)}`} aria-hidden="true"></span>
-                          <span className="text-sm font-semibold text-gray-700" itemProp="provider">{vuln.source}</span>
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${getSourceColor(vuln.source)} transition-colors`}>
+                            {vuln.source}
+                          </span>
                         </div>
                         <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${getSeverityColor(vuln.severity)}`}>
                           {vuln.severity}
@@ -346,13 +309,13 @@ export default async function Home() {
                       </div>
                       
                       {/* Title */}
-                      <h3 className="text-lg font-bold text-gray-900 mb-3 leading-tight" itemProp="headline">
-                        {vuln.cveId && <span className="text-blue-600" itemProp="identifier">{vuln.cveId}: </span>}
+                      <h3 className="text-lg font-bold text-white mb-3 leading-tight group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-orange-500 group-hover:bg-clip-text transition-all" itemProp="headline">
+                        {vuln.cveId && <span className="text-red-400" itemProp="identifier">{vuln.cveId}: </span>}
                         {vuln.title}
                       </h3>
                       
                       {/* Description */}
-                      <p className="text-gray-600 text-sm mb-4 leading-relaxed" itemProp="description">
+                      <p className="text-slate-400 text-sm mb-4 leading-relaxed" itemProp="description">
                         {vuln.description.length > 200 
                           ? `${vuln.description.substring(0, 200)}...` 
                           : vuln.description}
@@ -360,16 +323,16 @@ export default async function Home() {
                       
                       {/* Product Info */}
                       {vuln.product && vuln.vendor && (
-                        <div className="mb-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                          <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Affected Product</span>
-                          <p className="text-sm font-semibold text-gray-800 mt-1" itemProp="about">{vuln.vendor} {vuln.product}</p>
+                        <div className="mb-4 p-3 bg-slate-900/50 rounded-lg border border-slate-700">
+                          <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">Affected Product</span>
+                          <p className="text-sm font-semibold text-slate-200 mt-1" itemProp="about">{vuln.vendor} {vuln.product}</p>
                         </div>
                       )}
                       
                       {/* Footer */}
-                      <div className="flex justify-between items-center pt-4 border-t border-gray-200">
-                        <time className="text-xs text-gray-500 font-medium" dateTime={vuln.published} itemProp="datePublished">
-                          Published: {new Date(vuln.published).toLocaleDateString('en-US', { 
+                      <div className="flex justify-between items-center pt-4 border-t border-slate-700">
+                        <time className="text-xs text-slate-500 font-medium" dateTime={vuln.published} itemProp="datePublished">
+                          {new Date(vuln.published).toLocaleDateString('en-US', { 
                             year: 'numeric', 
                             month: 'short', 
                             day: 'numeric' 
@@ -379,14 +342,12 @@ export default async function Home() {
                           href={vuln.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800 text-sm font-semibold inline-flex items-center space-x-1 transition-colors"
+                          className="text-red-400 hover:text-red-300 text-sm font-semibold inline-flex items-center space-x-1 transition-colors"
                           itemProp="url"
                           aria-label={`View full details for ${vuln.cveId || vuln.title}`}
                         >
                           <span>View Details</span>
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                          </svg>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </a>
                       </div>
                     </div>
@@ -395,24 +356,22 @@ export default async function Home() {
               </section>
             </>
           ) : (
-            <div className="text-center py-16 bg-white rounded-xl shadow-md border border-gray-200">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6">
-                <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
+            <div className="text-center py-24 bg-slate-950 rounded-xl border border-slate-800">
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-slate-900 rounded-full mb-6 border border-slate-700">
+                <AlertTriangle className="w-12 h-12 text-slate-600" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-3">No Vulnerabilities Loaded</h2>
-              <p className="text-gray-600 mb-8 max-w-md mx-auto">Unable to fetch vulnerability data at this time. Please try again later or check our other resources.</p>
+              <h2 className="text-2xl font-bold text-white mb-3">No Vulnerabilities Loaded</h2>
+              <p className="text-slate-400 mb-8 max-w-md mx-auto">Unable to fetch vulnerability data at this time. Please try again later or check our other resources.</p>
               <div className="flex justify-center gap-4">
                 <Link 
                   href="/dashboard"
-                  className="btn-primary"
+                  className="px-6 py-3 rounded-lg bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-semibold transition-all duration-300 shadow-lg shadow-red-500/20 hover:shadow-red-500/40"
                 >
                   Try Dashboard
                 </Link>
                 <Link 
                   href="/ai-summaries"
-                  className="bg-purple-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-700 transition-colors duration-200 shadow-sm hover:shadow-md"
+                  className="px-6 py-3 rounded-lg border border-slate-700 hover:border-slate-600 bg-slate-900 hover:bg-slate-800 text-white font-semibold transition-colors"
                 >
                   View AI Analysis
                 </Link>
@@ -421,34 +380,38 @@ export default async function Home() {
           )}
 
           {/* Information Section with structured data */}
-          <section aria-label="Data sources information" className="mt-12 bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
-              <h2 className="text-xl font-bold text-white flex items-center space-x-2">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
+          <section aria-label="Data sources information" className="mt-16 bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+            <div className="bg-gradient-to-r from-red-600/20 to-orange-600/20 border-b border-slate-800 px-8 py-6">
+              <h2 className="text-2xl font-bold text-white flex items-center space-x-3">
+                <Shield className="w-6 h-6 text-red-500" />
                 <span>Trusted Data Sources</span>
               </h2>
             </div>
-            <div className="p-6">
+            <div className="p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-5 bg-red-50 rounded-lg border-2 border-red-200">
-                  <div className="flex items-center mb-3">
-                    <span className="w-4 h-4 bg-red-500 rounded-full mr-3" aria-hidden="true"></span>
-                    <h3 className="font-bold text-red-900 text-lg">CISA KEV Catalog</h3>
+                <div className="relative p-6 bg-gradient-to-br from-red-500/10 to-red-600/5 rounded-lg border border-red-500/30 hover:border-red-500/50 transition-colors group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
+                  <div className="relative">
+                    <div className="flex items-center mb-3">
+                      <span className="w-4 h-4 bg-red-500 rounded-full mr-3" aria-hidden="true"></span>
+                      <h3 className="font-bold text-red-300 text-lg">CISA KEV Catalog</h3>
+                    </div>
+                    <p className="text-sm text-slate-300 leading-relaxed">
+                      <strong>Known Exploited Vulnerabilities</strong> catalog maintained by the Cybersecurity and Infrastructure Security Agency. These are actively exploited vulnerabilities requiring immediate attention.
+                    </p>
                   </div>
-                  <p className="text-sm text-red-700 leading-relaxed">
-                    <strong>Known Exploited Vulnerabilities</strong> catalog maintained by the Cybersecurity and Infrastructure Security Agency (CISA). These vulnerabilities are actively being exploited in the wild and require immediate attention from security teams worldwide.
-                  </p>
                 </div>
-                <div className="p-5 bg-blue-50 rounded-lg border-2 border-blue-200">
-                  <div className="flex items-center mb-3">
-                    <span className="w-4 h-4 bg-blue-500 rounded-full mr-3" aria-hidden="true"></span>
-                    <h3 className="font-bold text-blue-900 text-lg">National Vulnerability Database</h3>
+                <div className="relative p-6 bg-gradient-to-br from-blue-500/10 to-blue-600/5 rounded-lg border border-blue-500/30 hover:border-blue-500/50 transition-colors group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
+                  <div className="relative">
+                    <div className="flex items-center mb-3">
+                      <span className="w-4 h-4 bg-blue-500 rounded-full mr-3" aria-hidden="true"></span>
+                      <h3 className="font-bold text-blue-300 text-lg">National Vulnerability Database</h3>
+                    </div>
+                    <p className="text-sm text-slate-300 leading-relaxed">
+                      The <strong>NVD</strong> provides comprehensive CVE information with CVSS scoring maintained by NIST. Essential for vulnerability management and security operations.
+                    </p>
                   </div>
-                  <p className="text-sm text-blue-700 leading-relaxed">
-                    The <strong>NVD</strong> provides comprehensive CVE information with CVSS scoring, vulnerability descriptions, and technical details maintained by the National Institute of Standards and Technology (NIST). Essential resource for vulnerability management and security operations.
-                  </p>
                 </div>
               </div>
             </div>

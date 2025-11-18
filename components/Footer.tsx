@@ -1,37 +1,44 @@
+import Link from 'next/link'
+
 export default function Footer() {
   return (
-    <footer className="mt-auto bg-gradient-to-r from-gray-800 to-gray-900 text-white border-t border-gray-700">
-      <div className="container mx-auto px-6 py-8 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="relative z-10 border-t border-slate-800 bg-black/50 backdrop-blur-md mt-16 py-12">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Zero-Day Vulnerability Tracker</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <div className="flex items-center space-x-2 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg flex items-center justify-center font-bold text-white text-sm">
+                SF
+              </div>
+              <span className="font-bold text-white">SECFORIT</span>
+            </div>
+            <p className="text-sm text-slate-400 leading-relaxed">
               Real-time security intelligence from trusted sources including CISA KEV and National Vulnerability Database.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold mb-3 uppercase tracking-wide text-gray-300">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-semibold text-white mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-sm text-slate-400">
               <li>
-                <a href="/" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/" className="hover:text-white transition-colors">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/dashboard" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/dashboard" className="hover:text-white transition-colors">
                   Dashboard
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/ai-summaries" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/ai-summaries" className="hover:text-white transition-colors">
                   AI Analysis
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/rss" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <a href="/rss" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   RSS Feed
                 </a>
               </li>
@@ -40,14 +47,14 @@ export default function Footer() {
 
           {/* Data Sources */}
           <div>
-            <h3 className="text-sm font-semibold mb-3 uppercase tracking-wide text-gray-300">Trusted Sources</h3>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-semibold text-white mb-4">Trusted Sources</h4>
+            <ul className="space-y-2 text-sm text-slate-400">
               <li>
                 <a 
                   href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   CISA KEV Catalog
                 </a>
@@ -57,7 +64,7 @@ export default function Footer() {
                   href="https://nvd.nist.gov/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   National Vulnerability Database
                 </a>
@@ -67,9 +74,26 @@ export default function Footer() {
                   href="https://cve.mitre.org/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   MITRE CVE
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h4 className="font-semibold text-white mb-4">Company</h4>
+            <ul className="space-y-2 text-sm text-slate-400">
+              <li>
+                <a href="https://secforit.ro" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                  About SECFORIT
+                </a>
+              </li>
+              <li>
+                <a href="mailto:razvan@secforit.ro" className="hover:text-white transition-colors">
+                  Contact
                 </a>
               </li>
             </ul>
@@ -77,18 +101,18 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 pt-6 border-t border-gray-700">
+        <div className="border-t border-slate-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-center md:text-left">
-              <p className="text-sm text-gray-400">
-                &copy; {new Date().getFullYear()} <span className="font-medium text-gray-300">SECFORIT SRL</span>. All rights reserved.
+              <p className="text-sm text-slate-400">
+                &copy; {new Date().getFullYear()} <span className="font-medium text-slate-300">SECFORIT SRL</span>. All rights reserved.
               </p>
             </div>
             <div className="text-center md:text-right">
-              <p className="text-sm text-gray-400">
-                Developed by <span className="font-semibold text-blue-400">Lisman Razvan</span>
+              <p className="text-sm text-slate-400">
+                Developed by <span className="font-semibold text-red-400">Lisman Razvan</span>
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Professional Cybersecurity Solutions
               </p>
             </div>
@@ -96,5 +120,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

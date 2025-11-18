@@ -3,22 +3,37 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #3b82f6;
-  --primary-dark: #2563eb;
-  --secondary: #6366f1;
+  /* Dark cybersecurity theme */
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #dc2626;
+  --primary-dark: #b91c1c;
+  --secondary: #ea580c;
   --accent: #8b5cf6;
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  
+  /* Card colors */
+  --card: #0f172a;
+  --card-border: #1e293b;
+  
+  /* Severity colors */
+  --critical-bg: rgba(239, 68, 68, 0.2);
+  --critical-text: #fca5a5;
+  --critical-border: rgba(239, 68, 68, 0.5);
+  
+  --high-bg: rgba(249, 115, 22, 0.2);
+  --high-text: #fdba74;
+  --high-border: rgba(249, 115, 22, 0.5);
+  
+  --medium-bg: rgba(234, 179, 8, 0.2);
+  --medium-text: #fde047;
+  --medium-border: rgba(234, 179, 8, 0.5);
+  
+  --low-bg: rgba(34, 197, 94, 0.2);
+  --low-text: #86efac;
+  --low-border: rgba(34, 197, 94, 0.5);
 }
 
 body {
@@ -38,7 +53,7 @@ body {
 
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 24px -4px rgba(220, 38, 38, 0.12), 0 8px 16px -4px rgba(220, 38, 38, 0.08);
 }
 
 /* Smooth transitions */
@@ -46,22 +61,74 @@ body {
   transition: all 0.2s ease-in-out;
 }
 
-/* Professional badge styling */
-.badge {
-  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+/* Status indicators with dark theme */
+.status-critical {
+  background-color: var(--critical-bg);
+  color: var(--critical-text);
+  border-color: var(--critical-border);
 }
 
-/* Professional button styling */
+.status-high {
+  background-color: var(--high-bg);
+  color: var(--high-text);
+  border-color: var(--high-border);
+}
+
+.status-medium {
+  background-color: var(--medium-bg);
+  color: var(--medium-text);
+  border-color: var(--medium-border);
+}
+
+.status-low {
+  background-color: var(--low-bg);
+  color: var(--low-text);
+  border-color: var(--low-border);
+}
+
+/* Button styles for dark theme */
 .btn-primary {
-  @apply bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200 shadow-sm hover:shadow-md;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px 0 rgba(220, 38, 38, 0.2);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, var(--primary-dark), var(--secondary));
+  box-shadow: 0 6px 20px 0 rgba(220, 38, 38, 0.4);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  @apply bg-gray-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-700 transition-colors duration-200 shadow-sm hover:shadow-md;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #334155;
+  border-color: #475569;
 }
 
 .btn-success {
-  @apply bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors duration-200 shadow-sm hover:shadow-md;
+  background-color: var(--success);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-success:hover {
+  background-color: #059669;
 }
 
 /* Loading animation */
@@ -78,52 +145,87 @@ body {
   animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Professional scrollbar */
+/* Dark scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #0f172a;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #334155;
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #475569;
 }
 
-/* Status indicators */
-.status-critical {
-  @apply bg-red-100 text-red-800 border-red-300;
-}
-
-.status-high {
-  @apply bg-orange-100 text-orange-800 border-orange-300;
-}
-
-.status-medium {
-  @apply bg-yellow-100 text-yellow-800 border-yellow-300;
-}
-
-.status-low {
-  @apply bg-green-100 text-green-800 border-green-300;
-}
-
-/* Professional gradient backgrounds */
+/* Gradient backgrounds */
 .gradient-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
 }
 
 .gradient-success {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+/* Text gradient for headings */
+.text-gradient {
+  background: linear-gradient(to right, #dc2626, #ea580c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Backdrop blur effects */
+.backdrop-blur-card {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Glow effects for important elements */
+.glow-red {
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+}
+
+.glow-red:hover {
+  box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
+}
+
+/* Border glow on hover */
+.border-glow-hover {
+  transition: all 0.3s ease;
+}
+
+.border-glow-hover:hover {
+  border-color: #dc2626;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+}
+
+/* Animated grid background */
+.animated-grid {
+  background-image: 
+    linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
 }
