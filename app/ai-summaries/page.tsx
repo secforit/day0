@@ -1,6 +1,5 @@
 import { 
   fetchLatestVulnerabilitiesWithSummaries,
-  regenerateVulnerabilitySummary,
   type VulnerabilitySummary,
   type VulnerabilityData 
 } from '../actions/ai-summary-actions';
@@ -113,7 +112,6 @@ export default async function AISummariesPage() {
             initialSummaries={result.summaries}
             timestamp={result.timestamp}
             error={result.error}
-            regenerateAction={regenerateVulnerabilitySummary}
           />
         </div>
         <Footer />
