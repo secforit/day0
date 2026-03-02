@@ -1,0 +1,77 @@
+# SECFORIT Day0 - Docker Compose for Ubuntu Deployment
+#
+# Services:
+#   - secforit-app: Next.js application (port 3000)
+#   - ollama: Local LLM inference with GPU (port 11434)
+#
+# Prerequisites:
+#   - Docker & Docker Compose
+#   - NVIDIA Container Toolkit (for GPU passthrough)
+#   - Ollama model pulled: docker exec -it ollama ollama pull llama3.1:8b
+#
+# Usage:
+#   docker compose up -d
+#   docker exec -it ollama ollama pull llama3.1:8b   # first time only
+#
+
+services:
+  # ============================================
+  # Ollama - Local LLM Inference
+  # RTX 3060 (12GB VRAM) -> llama3.1:8b
+  # ============================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:11434:11434"  # Only bind to localhost
+    volumes:
+      - ollama_data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - OLLAMA_NUM_PARALLEL=2          # Max 2 parallel requests (RTX 3060 VRAM limit)
+      - OLLAMA_MAX_LOADED_MODELS=1     # Keep 1 model loaded (12GB VRAM)
+      - OLLAMA_KEEP_ALIVE=30m          # Keep model in VRAM for 30 min
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ============================================
+  # SECFORIT Next.js Application
+  # ============================================
+  secforit-app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: secforit-app
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"  # Only bind to localhost (nginx handles external)
+    environment:
+      - NODE_ENV=production
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - NVD_API_KEY=${NVD_API_KEY:-}
+      - NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL:-http://localhost:3000}
+      - OLLAMA_BASE_URL=http://ollama:11434   # Docker internal DNS
+      - OLLAMA_MODEL=llama3.1:8b
+    depends_on:
+      ollama:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  ollama_data:
+    driver: local

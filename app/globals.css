@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
+}
+
+/* Live pulse indicator */
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.animate-pulse-live {
+  animation: pulse-live 2s ease-in-out infinite;
+}
+
+/* Grid background matching secforit.ro */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(220, 38, 38, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(220, 38, 38, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
